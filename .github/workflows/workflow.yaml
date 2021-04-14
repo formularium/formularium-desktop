@@ -21,3 +21,15 @@ jobs:
     - run: flutter config --enable-macos-desktop
     - run: flutter doctor
     - run: flutter build macos --release
+    - run: flutter build linux --release
+
+  upload-artifacts:
+    steps:
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-osx
+          path: build/macos
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-linux
+          path: build/linux
