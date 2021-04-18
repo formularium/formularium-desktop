@@ -19,7 +19,7 @@ jobs:
           flutter-version: '2.0.4'
       - run: sudo apt-get update
       - run: sudo apt-get upgrade
-      - run: sudo apt install clang cmake ninja-build pkg-config libgtk-3-dev wget curl
+      - run: sudo apt install clang cmake ninja-build pkg-config libgtk-3-dev wget curl cmake
       - run: flutter upgrade --force
       - run: flutter config --no-analytics
       - run: flutter pub get
