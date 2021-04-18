@@ -23,7 +23,7 @@ jobs:
       - run: flutter doctor
       - run: flutter test
       - run: flutter config --enable-linux-desktop --verbose
-      - run: flutter build linux --release
+      - run: flutter build linux --release --verbose
       - uses: actions/upload-artifact@v2
         with:
           name: build-linux
