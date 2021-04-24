@@ -19,19 +19,12 @@ class HomePage extends StatelessWidget {
               height: 6,
             ),
             Text(
-              "Fluro routing examples",
+              "Login Successful",
               style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
               height: 10,
             ),
-            TextButton(
-              onPressed: () => AppRouter.router.navigateTo(
-                context,
-                AppRoutes.loginRoute.route,
-              ),
-              child: const Text("Contact List"),
-            )
           ],
         ),
       ),

@@ -1,18 +1,33 @@
+
+// generated with https://javiercbk.github.io/json_to_dart/
 class InstanceSettings {
   Instance instance;
   String authURL;
+  String tokenURL;
   String apiURL;
+  String redirectURL;
   String clientID;
+  int loopBackPort;
 
-  InstanceSettings({this.instance, this.authURL, this.apiURL, this.clientID});
+  InstanceSettings(
+      {this.instance,
+        this.authURL,
+        this.tokenURL,
+        this.apiURL,
+        this.redirectURL,
+        this.clientID,
+        this.loopBackPort});
 
   InstanceSettings.fromJson(Map<String, dynamic> json) {
     instance = json['instance'] != null
         ? new Instance.fromJson(json['instance'])
         : null;
     authURL = json['authURL'];
+    tokenURL = json['tokenURL'];
     apiURL = json['apiURL'];
+    redirectURL = json['redirectURL'];
     clientID = json['clientID'];
+    loopBackPort = json['loopBackPort'];
   }
 
   Map<String, dynamic> toJson() {
@@ -21,8 +36,11 @@ class InstanceSettings {
       data['instance'] = this.instance.toJson();
     }
     data['authURL'] = this.authURL;
+    data['tokenURL'] = this.tokenURL;
     data['apiURL'] = this.apiURL;
+    data['redirectURL'] = this.redirectURL;
     data['clientID'] = this.clientID;
+    data['loopBackPort'] = this.loopBackPort;
     return data;
   }
 }

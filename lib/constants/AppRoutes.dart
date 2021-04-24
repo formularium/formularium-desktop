@@ -1,9 +1,10 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:formularium_desktop/core/InitRouterPage.dart';
-import 'package:formularium_desktop/core/LoginPage.dart';
 import 'package:formularium_desktop/core/RouteNotFoundPage.dart';
 import 'package:formularium_desktop/core/onboarding/1_InstanceConfig.dart';
+import 'package:formularium_desktop/core/onboarding/2_Login.dart';
+import 'package:formularium_desktop/core/onboarding/3_PGP.dart';
 import 'package:formularium_desktop/pages/HomePage.dart';
 
 class AppRoutes {
@@ -32,7 +33,7 @@ class AppRoutes {
 
   // oauth login view
   static final loginRoute = AppRoute(
-    '/login',
+    '/setup/login',
     Handler(
       handlerFunc: (context, parameters) => LoginPage(),
     ),
@@ -40,10 +41,19 @@ class AppRoutes {
 
 
   //setup instance
-  static final setupInstanceConfig = AppRoute(
+  static final setupInstanceConfigRoute = AppRoute(
     '/setup/instanceConfig',
     Handler(
       handlerFunc: (context, parameters) => SetupInstanceConfig(),
+    ),
+  );
+
+
+  //setup pgp
+  static final setupPGPRoute = AppRoute(
+    '/setup/pgp',
+    Handler(
+      handlerFunc: (context, parameters) => PGPSetupPage(),
     ),
   );
 
@@ -52,6 +62,7 @@ class AppRoutes {
     initRoute,
     dashboardRoute,
     loginRoute,
-    setupInstanceConfig
+    setupPGPRoute,
+    setupInstanceConfigRoute
   ];
 }

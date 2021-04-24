@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:formularium_desktop/models/InstanceSettings.dart';
 import 'package:formularium_desktop/models/InstanceStatus.dart';
+import 'package:oauth2/oauth2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:oauth2/oauth2.dart' as oauth2;
 
 class PreferencesService {
   static PreferencesService _instance;
@@ -31,6 +33,7 @@ class PreferencesService {
 
   static const String InstanceSettingsKey = 'instanceSettings';
   static const String InstanceStatusKey = 'instanceStatus';
+  static const String oAuthCredentialsKey = 'authCredentials';
 
   InstanceSettings get instanceSettings {
     var instanceSettingsJson = _getFromDisk(InstanceSettingsKey);
@@ -52,6 +55,18 @@ class PreferencesService {
   }
   set instanceStatus(InstanceStatus settingsToSave) {
     saveStringToDisk(InstanceStatusKey, json.encode(settingsToSave.toJson()));
+  }
+
+  Credentials get oAuthCredentials {
+    var oAuthCredentials = _getFromDisk(oAuthCredentialsKey);
+
+    if (oAuthCredentials == null) {
+      return null;
+    }
+    return oauth2.Credentials.fromJson(json.decode(oAuthCredentials));
+  }
+  set oAuthCredentials(Credentials oAuthCredentialsToSave) {
+    saveStringToDisk(oAuthCredentialsKey, json.encode(oAuthCredentialsToSave.toJson()));
   }
 
 }

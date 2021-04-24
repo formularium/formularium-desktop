@@ -3,7 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  biometric_storage
   file_selector_linux
+  openpgp
   url_launcher_linux
 )
 

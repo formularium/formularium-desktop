@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:formularium_desktop/constants/AppRoutes.dart';
 import 'package:formularium_desktop/models/AppRouter.dart';
 import 'package:formularium_desktop/models/InstanceStatus.dart';
+import 'package:formularium_desktop/services/OauthService.dart';
+import 'package:formularium_desktop/services/PGPService.dart';
 import 'package:formularium_desktop/services/PreferencesService.dart';
 
 import '../main.dart';
@@ -27,11 +29,46 @@ class InitRouterPage extends StatelessWidget {
     if(status.isConfigured == false) {
       AppRouter.router.navigateTo(
         context,
-        AppRoutes.setupInstanceConfig.route,
+        AppRoutes.setupInstanceConfigRoute.route,
       );
-    }else if(getIt<PreferencesService>().instanceStatus.isLoggedIn){
-
+    }else if(getIt<PreferencesService>().instanceStatus.isLoggedIn == false){
+      AppRouter.router.navigateTo(
+        context,
+        AppRoutes.loginRoute.route,
+      );
+    } else if(getIt<PreferencesService>().instanceStatus.hasPGPKey == false) {
+      AppRouter.router.navigateTo(
+        context,
+        AppRoutes.setupPGPRoute.route,
+      );
     }
+
+    // refresh tokens
+    if(getIt<PreferencesService>().instanceStatus.isLoggedIn == true){
+      OauthService oa = await OauthService.setup(getIt<PreferencesService>().instanceSettings);
+      await oa.getClient(getIt<PreferencesService>().oAuthCredentials);
+      await oa.refreshToken();
+      if(oa.oauthClient.credentials.isExpired == true) {
+        getIt<PreferencesService>().oAuthCredentials = null;
+        AppRouter.router.navigateTo(
+          context,
+          AppRoutes.loginRoute.route,
+        );
+        return;
+      }
+    }
+    if(getIt<PreferencesService>().instanceStatus.isLoggedIn == true &&
+        getIt<PreferencesService>().instanceStatus.hasPGPKey == true &&
+        getIt<PreferencesService>().instanceStatus.isConfigured == true)
+      {
+        print((await PGPService.loadKeyPair()).publicKey);
+        AppRouter.router.navigateTo(
+          context,
+          AppRoutes.dashboardRoute.route,
+        );
+      }
+
+
   }
 
   @override

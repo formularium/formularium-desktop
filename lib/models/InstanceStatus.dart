@@ -1,3 +1,4 @@
+// generated with https://javiercbk.github.io/json_to_dart/
 class InstanceStatus {
   bool isLoggedIn;
   bool isConfigured;

@@ -26,19 +26,34 @@ class _SetupInstanceConfig extends State<SetupInstanceConfig> {
           appBar: AppBar(
             title: Text('Instance Configuration'),
           ),
-          body:  Center(
-            child:
-            ElevatedButton(
-              onPressed: () => _openFileExplorer(),
-              child: const Text("Open file picker"),
-            ),
+          body: Center(
+          child: Card(
+          child: Column(
+            children: <Widget>[
+              const ListTile(
+                title: Text('Load your Formularium configuration'),
+                subtitle: Text('The Formularium instance configuration file will be provided by your administrator or via the Forularium dashboard'),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  TextButton(
+                    child: const Text('Open Configuraton File'),
+                    onPressed: () => _openFileExplorer(),
+                  ),
+                  const SizedBox(width: 8),
+                ],
+              ),
+            ],
           ),
-        ));
+        ),
+    )));
   }
 
   void _openFileExplorer() async {
     final typeGroup = XTypeGroup(label: 'formularium-configs', extensions: ['formularium']);
     final file = await openFile(acceptedTypeGroups: [typeGroup]);
+    //TODO(@LilithWittmann): all the error handling
     if(file != null){
       String config = await file.readAsString();
       getIt<PreferencesService>().instanceSettings = InstanceSettings.fromJson(json.decode(config));
