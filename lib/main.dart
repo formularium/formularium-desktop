@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'constants/AppRoutes.dart';
+import 'constants/custom_theme.dart';
 import 'models/AppRouter.dart';
 
 final getIt = GetIt.instance;
@@ -51,11 +52,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Formularium Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      onGenerateRoute: AppRouter.router.generator,
       debugShowCheckedModeBanner: false,
+      theme: customLightTheme(context),
+      onGenerateRoute: AppRouter.router.generator,
     );
   }
 }

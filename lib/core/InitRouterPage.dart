@@ -65,17 +65,15 @@ class InitRouterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => this._routeToStart(context));
-    return MaterialApp(
-        title: "Formularium",
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Formularium'),
-          ),
-          body: Center(
-            child: CircularProgressIndicator(
-              semanticsLabel: 'Linear progress indicator',
-            ),
-          ),
-        ));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Formularium'),
+      ),
+      body: Center(
+        child: CircularProgressIndicator(
+          semanticsLabel: 'Linear progress indicator',
+        ),
+      ),
+    );
   }
 }
