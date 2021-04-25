@@ -24,8 +24,6 @@ class LoadigOverlay extends StatelessWidget {
                   child: Text(loadingTxt, style: TextStyle(fontSize: 18)),
                 ),
               ]))
-            ])
-        )
-    );
+            ])));
   }
 }

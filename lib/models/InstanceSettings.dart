@@ -1,4 +1,3 @@
-
 // generated with https://javiercbk.github.io/json_to_dart/
 class InstanceSettings {
   Instance instance;
@@ -11,12 +10,12 @@ class InstanceSettings {
 
   InstanceSettings(
       {this.instance,
-        this.authURL,
-        this.tokenURL,
-        this.apiURL,
-        this.redirectURL,
-        this.clientID,
-        this.loopBackPort});
+      this.authURL,
+      this.tokenURL,
+      this.apiURL,
+      this.redirectURL,
+      this.clientID,
+      this.loopBackPort});
 
   InstanceSettings.fromJson(Map<String, dynamic> json) {
     instance = json['instance'] != null

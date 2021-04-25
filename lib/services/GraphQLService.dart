@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:formularium_desktop/services/OauthService.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -21,26 +19,26 @@ class GraphQLService {
   }
 
   reloadSettings() async {
-    if(getIt<PreferencesService>().instanceSettings != null && getIt<PreferencesService>().oAuthCredentials != null)
-    {
+    if (getIt<PreferencesService>().instanceSettings != null &&
+        getIt<PreferencesService>().oAuthCredentials != null) {
       final HttpLink httpLink = HttpLink(
         getIt<PreferencesService>().instanceSettings.apiURL,
       );
-      OauthService oauthService = await OauthService.setup(getIt<PreferencesService>().instanceSettings);
+      OauthService oauthService = await OauthService.setup(
+          getIt<PreferencesService>().instanceSettings);
       oauthService.getClient(getIt<PreferencesService>().oAuthCredentials);
-      print('Bearer '+await oauthService.accessToken);
+      print('Bearer ' + await oauthService.accessToken);
       final AuthLink authLink = AuthLink(
         headerKey: "authorization",
-        getToken: () async => 'Bearer '+await oauthService.accessToken,
+        getToken: () async => 'Bearer ' + await oauthService.accessToken,
       );
       _instance._link = authLink.concat(httpLink);
 
-      _instance._gql_client =
-        GraphQLClient(
-          link: _instance._link,
-          cache: GraphQLCache(store: HiveStore()),
-          // The default store is the InMemoryStore, which does NOT persist to disk
-        );
+      _instance._gql_client = GraphQLClient(
+        link: _instance._link,
+        cache: GraphQLCache(store: HiveStore()),
+        // The default store is the InMemoryStore, which does NOT persist to disk
+      );
     }
   }
 

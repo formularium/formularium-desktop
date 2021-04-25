@@ -1,5 +1,3 @@
-
-
 class GQLQueries {
   static const String ME = """
   query me {
@@ -11,7 +9,7 @@ class GQLQueries {
     }
   }""";
 
-  static const String SUBMIT_KEY ="""
+  static const String SUBMIT_KEY = """
   mutation(\$publicKey: String!) {
       submitEncryptionKey(publicKey: \$publicKey ) {
         success
@@ -24,7 +22,7 @@ class GQLQueries {
     }
   """;
 
-  static const String ALL_FORM_SUBMISSIONS ="""
+  static const String ALL_FORM_SUBMISSIONS = """
   query allFormSubmissions {
       allFormSubmissions {
         edges {
@@ -45,5 +43,3 @@ class GQLQueries {
   }
   """;
 }
-
-

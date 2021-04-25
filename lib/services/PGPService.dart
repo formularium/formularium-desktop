@@ -5,7 +5,6 @@ import 'package:openpgp/model/bridge.pb.dart';
 import 'package:openpgp/openpgp.dart';
 
 class PGPService {
-
   KeyPair _keyPair;
   String _passphrase;
   static PGPService _instance;
@@ -17,15 +16,15 @@ class PGPService {
     return _instance;
   }
 
-
   static fromKeyPair(KeyPair keyPair) {
     PGPService pgpService = PGPService();
     pgpService._keyPair = keyPair;
     return pgpService;
   }
-  
+
   Future<PGPService> loadKeyPair() async {
-    return PGPService.fromKeyPair(KeyPair.fromJson(await (await PGPService.getBiometricStorage()).read()));
+    return PGPService.fromKeyPair(KeyPair.fromJson(
+        await (await PGPService.getBiometricStorage()).read()));
   }
 
   static canAccessBiometricStorage() async {
@@ -33,13 +32,13 @@ class PGPService {
     print('checked if authentication was possible: $response');
   }
 
-  static Future<BiometricStorageFile> getBiometricStorage() async{
+  static Future<BiometricStorageFile> getBiometricStorage() async {
     return await BiometricStorage().getStorage('pgpKey',
         options: StorageFileInitOptions(
             authenticationValidityDurationSeconds: 1200));
   }
 
-  static generateNewKey(String name, String email, String passphrase) async{
+  static generateNewKey(String name, String email, String passphrase) async {
     var keyOptions = KeyOptions()..rsaBits = 4096;
     var keyPair = await OpenPGP.generate(
         options: Options()
@@ -55,36 +54,38 @@ class PGPService {
     this._passphrase = passphrase;
   }
 
-  get publicKey{
+  get publicKey {
     return this._keyPair.publicKey;
   }
 
-  get keyHash{
+  get keyHash {
     return this._keyPair.hashCode;
   }
 
-  Future<String> decrypt(String encrypted) async{
-    return await OpenPGP.decrypt(encrypted,this._keyPair.privateKey, this._passphrase);
+  Future<String> decrypt(String encrypted) async {
+    return await OpenPGP.decrypt(
+        encrypted, this._keyPair.privateKey, this._passphrase);
   }
 
-  Future<String> encrypt(String text) async{
-    return await OpenPGP.encrypt(text,this._keyPair.publicKey);
+  Future<String> encrypt(String text) async {
+    return await OpenPGP.encrypt(text, this._keyPair.publicKey);
   }
 
-  static Future<String> encryptWithPGP(String text, String pgpKey) async{
+  static Future<String> encryptWithPGP(String text, String pgpKey) async {
     return await OpenPGP.encrypt(text, pgpKey);
   }
 
-  Future<String> sign(String text) async{
-    return await OpenPGP.sign(text,this._keyPair.publicKey, this._keyPair.privateKey, this._passphrase);
+  Future<String> sign(String text) async {
+    return await OpenPGP.sign(text, this._keyPair.publicKey,
+        this._keyPair.privateKey, this._passphrase);
   }
 
-  Future<bool> verify(String signedText, String text) async{
+  Future<bool> verify(String signedText, String text) async {
     return await OpenPGP.verify(signedText, text, this._keyPair.publicKey);
   }
 
-  static Future<bool> verifyWithPGP(String signedText, String text, String pgpKey) async{
+  static Future<bool> verifyWithPGP(
+      String signedText, String text, String pgpKey) async {
     return await OpenPGP.verify(signedText, text, pgpKey);
   }
-
 }

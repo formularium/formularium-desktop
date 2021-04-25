@@ -19,7 +19,7 @@ class AppRouter {
   void setupRoutes() {
     router.notFoundHandler = _notFoundHandler;
     routes.forEach(
-          (AppRoute route) => router.define(route.route, handler: route.handler),
+      (AppRoute route) => router.define(route.route, handler: route.handler),
     );
   }
 }

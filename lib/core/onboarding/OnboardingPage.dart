@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 MaterialApp onboardingCardLayout(children, screenTitle, appbarTitle) {
@@ -9,15 +7,11 @@ MaterialApp onboardingCardLayout(children, screenTitle, appbarTitle) {
           appBar: AppBar(
             title: Text(appbarTitle),
           ),
-          body:Center(child: Container(
-              width: 500,
-              child: Card(
-                  child: Column(mainAxisSize: MainAxisSize.min,
-                      children: children
-                      )
-              )
-          )
-          )
-      )
-  );
+          body: Center(
+              child: Container(
+                  width: 500,
+                  child: Card(
+                      child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: children))))));
 }

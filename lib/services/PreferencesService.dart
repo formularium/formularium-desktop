@@ -17,17 +17,19 @@ class PreferencesService {
       _preferences = await SharedPreferences.getInstance();
     }
     return _instance;
-}
+  }
 
-  dynamic _getFromDisk(String key){
+  dynamic _getFromDisk(String key) {
     final SharedPreferences prefs = _preferences;
 
-    var value  = _preferences.get(key);
+    var value = _preferences.get(key);
     print('(TRACE) PreferencesService:_getFromDisk. key: $key value: $value');
     return value;
   }
+
   Future<void> saveStringToDisk(String key, String content) async {
-    print('(TRACE) PreferencesService:_saveStringToDisk. key: $key value: $content');
+    print(
+        '(TRACE) PreferencesService:_saveStringToDisk. key: $key value: $content');
     await _preferences.setString(key, content);
   }
 
@@ -42,8 +44,9 @@ class PreferencesService {
     }
     return InstanceSettings.fromJson(json.decode(instanceSettingsJson));
   }
+
   set instanceSettings(InstanceSettings settingsToSave) {
-      saveStringToDisk(InstanceSettingsKey, json.encode(settingsToSave.toJson()));
+    saveStringToDisk(InstanceSettingsKey, json.encode(settingsToSave.toJson()));
   }
 
   InstanceStatus get instanceStatus {
@@ -53,6 +56,7 @@ class PreferencesService {
     }
     return InstanceStatus.fromJson(json.decode(intstanceStatusJson));
   }
+
   set instanceStatus(InstanceStatus settingsToSave) {
     saveStringToDisk(InstanceStatusKey, json.encode(settingsToSave.toJson()));
   }
@@ -65,12 +69,14 @@ class PreferencesService {
     }
     return oauth2.Credentials.fromJson(json.decode(oAuthCredentials));
   }
+
   set oAuthCredentials(Credentials oAuthCredentialsToSave) {
-      saveStringToDisk(oAuthCredentialsKey, json.encode(oAuthCredentialsToSave.toJson()));
+    saveStringToDisk(
+        oAuthCredentialsKey, json.encode(oAuthCredentialsToSave.toJson()));
   }
 
   oAuthCredentialsAsync(Credentials oAuthCredentialsToSave) async {
-    await saveStringToDisk(oAuthCredentialsKey, json.encode(oAuthCredentialsToSave.toJson()));
+    await saveStringToDisk(
+        oAuthCredentialsKey, json.encode(oAuthCredentialsToSave.toJson()));
   }
-
 }

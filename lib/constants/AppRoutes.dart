@@ -10,10 +10,10 @@ import 'package:formularium_desktop/pages/HomePage.dart';
 class AppRoutes {
   static final routeNotFoundHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-        debugPrint("Route not found.");
+    debugPrint("Route not found.");
 
-        return RouteNotFoundPage();
-      });
+    return RouteNotFoundPage();
+  });
 
   static final dashboardRoute = AppRoute(
     '/dashboard',
@@ -21,8 +21,6 @@ class AppRoutes {
       handlerFunc: (context, parameters) => HomePage(),
     ),
   );
-
-
 
   static final initRoute = AppRoute(
     '/',
@@ -39,7 +37,6 @@ class AppRoutes {
     ),
   );
 
-
   //setup instance
   static final setupInstanceConfigRoute = AppRoute(
     '/setup/instanceConfig',
@@ -48,7 +45,6 @@ class AppRoutes {
     ),
   );
 
-
   //setup pgp
   static final setupPGPRoute = AppRoute(
     '/setup/pgp',
@@ -56,7 +52,6 @@ class AppRoutes {
       handlerFunc: (context, parameters) => PGPSetupPage(),
     ),
   );
-
 
   static final List<AppRoute> routes = [
     initRoute,
