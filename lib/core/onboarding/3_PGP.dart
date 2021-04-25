@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:formularium_desktop/constants/AppRoutes.dart';
+import 'package:formularium_desktop/constants/GraphQL.dart';
 import 'package:formularium_desktop/models/AppRouter.dart';
+import 'package:formularium_desktop/services/GraphQLService.dart';
 import 'package:formularium_desktop/services/PGPService.dart';
 import 'package:formularium_desktop/services/PreferencesService.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../main.dart';
+import 'OnboardingPage.dart';
 
 class PGPSetupPage extends StatefulWidget {
   @override
@@ -26,20 +30,10 @@ class _PGPSetupPage extends State<PGPSetupPage> {
   String password;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "Login",
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text('Setup your Encryption Key'),
-            ),
-            body:Center(child: Container(
-            width: 500,
-            child: Card(
-            child: Column(mainAxisSize: MainAxisSize.min,
-            children: <Widget>[Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
+    return onboardingCardLayout(<Widget>[Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 0, vertical: 16),
                   child: const ListTile(
@@ -48,22 +42,22 @@ class _PGPSetupPage extends State<PGPSetupPage> {
                   )),
 
               Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextFormField(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: TextFormField(
                     obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Password',
-                ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Password',
+                    ),
                     onChanged: (val) => password = val,
                     // assign the the multi validator to the TextFormField validator
                     validator: this.passwordValidator,
                   )),
 
-                  // using the match validator to confirm password
+              // using the match validator to confirm password
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child:TextFormField(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child:TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -72,19 +66,20 @@ class _PGPSetupPage extends State<PGPSetupPage> {
                     validator: (val) => MatchValidator(errorText: 'passwords do not match').validateMatch(val, password),
                   )),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: ElevatedButton(onPressed:  () => generateKey(context), child: Text("Generate Key"))
               )
-                ],
-              ),
-            )
-        ]))))));
+            ],
+          ),
+        )
+        ],  "Login", 'Setup your Encryption Key');
   }
 
   void generateKey(context) async {
     if(_formKey.currentState.validate()) {
-      PGPService pgpService = await PGPService.generateNewKey("Lilith", "mail@lilithwittmann.de", this.password);
-      print(pgpService.publicKey);
+      var user = await getIt<GraphQLService>().graphQLClient.query(QueryOptions(document: gql(GQLQueries.ME)));
+      PGPService pgpService = await PGPService.generateNewKey(user.data["me"]["firstName"],
+          user.data["me"]["email"], this.password);
       var status = getIt<PreferencesService>().instanceStatus;
       status.hasPGPKey =true;
       getIt<PreferencesService>().instanceStatus = status;
@@ -93,7 +88,5 @@ class _PGPSetupPage extends State<PGPSetupPage> {
         AppRoutes.initRoute.route,
       );
     }
-
-
   }
 }

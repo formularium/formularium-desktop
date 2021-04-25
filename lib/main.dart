@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:formularium_desktop/services/GraphQLService.dart';
+import 'package:formularium_desktop/services/PGPService.dart';
 import 'package:formularium_desktop/services/PreferencesService.dart';
 import 'package:get_it/get_it.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -16,6 +17,10 @@ final getIt = GetIt.instance;
 Future setupGetIt() async {
   var prefinstance = await PreferencesService.getInstance();
   getIt.registerSingleton<PreferencesService>(prefinstance);
+
+
+  var pgpinstance = await PGPService.getInstance();
+  getIt.registerSingleton<PGPService>(pgpinstance);
 
   var gqlistace = await GraphQLService.getInstance();
   getIt.registerSingleton<GraphQLService>(gqlistace);

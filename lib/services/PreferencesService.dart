@@ -26,9 +26,9 @@ class PreferencesService {
     print('(TRACE) PreferencesService:_getFromDisk. key: $key value: $value');
     return value;
   }
-  void saveStringToDisk(String key, String content){
+  Future<void> saveStringToDisk(String key, String content) async {
     print('(TRACE) PreferencesService:_saveStringToDisk. key: $key value: $content');
-    _preferences.setString(key, content);
+    await _preferences.setString(key, content);
   }
 
   static const String InstanceSettingsKey = 'instanceSettings';
@@ -66,7 +66,11 @@ class PreferencesService {
     return oauth2.Credentials.fromJson(json.decode(oAuthCredentials));
   }
   set oAuthCredentials(Credentials oAuthCredentialsToSave) {
-    saveStringToDisk(oAuthCredentialsKey, json.encode(oAuthCredentialsToSave.toJson()));
+      saveStringToDisk(oAuthCredentialsKey, json.encode(oAuthCredentialsToSave.toJson()));
+  }
+
+  oAuthCredentialsAsync(Credentials oAuthCredentialsToSave) async {
+    await saveStringToDisk(oAuthCredentialsKey, json.encode(oAuthCredentialsToSave.toJson()));
   }
 
 }

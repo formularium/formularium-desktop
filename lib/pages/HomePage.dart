@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GraphQLProvider(
-        client: getIt<GraphQLService>().graphQLClient,
+        client: ValueNotifier(getIt<GraphQLService>().graphQLClient),
         child: Scaffold(
       body: Center(
         child: Column(

@@ -38,6 +38,7 @@ class InitRouterPage extends StatelessWidget {
         AppRoutes.loginRoute.route,
       );
     } else if(getIt<PreferencesService>().instanceStatus.hasPGPKey == false) {
+      await getIt<PGPService>().loadKeyPair();
       AppRouter.router.navigateTo(
         context,
         AppRoutes.setupPGPRoute.route,
@@ -56,7 +57,7 @@ class InitRouterPage extends StatelessWidget {
         getIt<PreferencesService>().instanceStatus.hasPGPKey == true &&
         getIt<PreferencesService>().instanceStatus.isConfigured == true)
       {
-        print((await PGPService.loadKeyPair()).publicKey);
+        await getIt<PGPService>().loadKeyPair();
         AppRouter.router.navigateTo(
           context,
           AppRoutes.dashboardRoute.route,

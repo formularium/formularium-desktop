@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:formularium_desktop/models/InstanceSettings.dart';
+import 'package:formularium_desktop/services/GraphQLService.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,7 +27,8 @@ class OauthService {
 
   refreshToken() async {
     await this.oauthClient.refreshCredentials();
-    getIt<PreferencesService>().oAuthCredentials = this.oauthClient.credentials;
+    await getIt<PreferencesService>().oAuthCredentialsAsync(this.oauthClient.credentials);
+    await getIt<GraphQLService>().reloadSettings();
   }
 
   get accessToken async{
@@ -60,8 +62,9 @@ class OauthService {
     // the AuthorizationCodeGrant. It will validate them and extract the
     // authorization code to create a new Client.
     this.oauthClient =  await grant.handleAuthorizationResponse(code);
-    getIt<PreferencesService>().oAuthCredentials = this.oauthClient.credentials;
-      return this.oauthClient;
+    await getIt<PreferencesService>().oAuthCredentialsAsync(this.oauthClient.credentials);
+    await getIt<GraphQLService>().reloadSettings();
+    return this.oauthClient;
   }
 
 

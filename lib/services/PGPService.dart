@@ -8,6 +8,14 @@ class PGPService {
 
   KeyPair _keyPair;
   String _passphrase;
+  static PGPService _instance;
+
+  static Future<PGPService> getInstance() async {
+    if (_instance == null) {
+      _instance = PGPService();
+    }
+    return _instance;
+  }
 
 
   static fromKeyPair(KeyPair keyPair) {
@@ -16,16 +24,19 @@ class PGPService {
     return pgpService;
   }
   
-  static Future<PGPService> loadKeyPair() async {
+  Future<PGPService> loadKeyPair() async {
     return PGPService.fromKeyPair(KeyPair.fromJson(await (await PGPService.getBiometricStorage()).read()));
   }
 
-  static Future<BiometricStorageFile> getBiometricStorage() async{
+  static canAccessBiometricStorage() async {
     final response = await BiometricStorage().canAuthenticate();
     print('checked if authentication was possible: $response');
+  }
+
+  static Future<BiometricStorageFile> getBiometricStorage() async{
     return await BiometricStorage().getStorage('pgpKey',
         options: StorageFileInitOptions(
-            authenticationValidityDurationSeconds: 90));
+            authenticationValidityDurationSeconds: 1200));
   }
 
   static generateNewKey(String name, String email, String passphrase) async{

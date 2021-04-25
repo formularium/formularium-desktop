@@ -8,6 +8,7 @@ import 'package:formularium_desktop/models/InstanceSettings.dart';
 import 'package:formularium_desktop/services/PreferencesService.dart';
 
 import '../../main.dart';
+import 'OnboardingPage.dart';
 
 
 class SetupInstanceConfig extends StatefulWidget {
@@ -20,34 +21,21 @@ class _SetupInstanceConfig extends State<SetupInstanceConfig> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "Formularium Setup: Instance Config",
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('Instance Configuration'),
-          ),
-          body: Center(
-          child: Card(
-          child: Column(
-            children: <Widget>[
-              const ListTile(
-                title: Text('Load your Formularium configuration'),
-                subtitle: Text('The Formularium instance configuration file will be provided by your administrator or via the Forularium dashboard'),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  TextButton(
-                    child: const Text('Open Configuraton File'),
-                    onPressed: () => _openFileExplorer(),
-                  ),
-                  const SizedBox(width: 8),
-                ],
-              ),
-            ],
-          ),
-        ),
-    )));
+    return onboardingCardLayout(<Widget>[
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+        child:  const ListTile(
+          title: Text('Load your Formularium configuration'),
+          subtitle: Text('The Formularium instance configuration file will be provided by your administrator or via the Forularium dashboard'),
+        )
+      ),
+      Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: ElevatedButton(onPressed:  () => _openFileExplorer(), child: Text("Open Configuration File"))
+      )
+
+    ],
+        "Formularium Setup: Instance Configuration", "Instance Configuration");
   }
 
   void _openFileExplorer() async {
