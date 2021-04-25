@@ -110,10 +110,9 @@ class _PGPSetupPage extends State<PGPSetupPage> {
         _spinner = "Submitting Key";
       });
 
-      await getIt<GraphQLService>().graphQLClient.mutate(
-          MutationOptions(
-              document: gql(GQLQueries.SUBMIT_KEY),
-              variables: {"publicKey": pgpService.publicKey}));
+      await getIt<GraphQLService>().graphQLClient.mutate(MutationOptions(
+          document: gql(GQLQueries.SUBMIT_KEY),
+          variables: {"publicKey": pgpService.publicKey}));
 
       var status = getIt<PreferencesService>().instanceStatus;
       status.hasPGPKey = true;
