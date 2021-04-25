@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:formularium_desktop/constants/AppRoutes.dart';
 import 'package:formularium_desktop/models/AppRouter.dart';
 import 'package:formularium_desktop/models/InstanceStatus.dart';
+import 'package:formularium_desktop/services/GraphQLService.dart';
 import 'package:formularium_desktop/services/OauthService.dart';
 import 'package:formularium_desktop/services/PGPService.dart';
 import 'package:formularium_desktop/services/PreferencesService.dart';
@@ -47,14 +48,8 @@ class InitRouterPage extends StatelessWidget {
     if(getIt<PreferencesService>().instanceStatus.isLoggedIn == true){
       OauthService oa = await OauthService.setup(getIt<PreferencesService>().instanceSettings);
       await oa.getClient(getIt<PreferencesService>().oAuthCredentials);
-      await oa.refreshToken();
       if(oa.oauthClient.credentials.isExpired == true) {
-        getIt<PreferencesService>().oAuthCredentials = null;
-        AppRouter.router.navigateTo(
-          context,
-          AppRoutes.loginRoute.route,
-        );
-        return;
+        await oa.refreshToken();
       }
     }
     if(getIt<PreferencesService>().instanceStatus.isLoggedIn == true &&

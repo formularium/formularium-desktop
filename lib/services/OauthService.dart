@@ -29,6 +29,15 @@ class OauthService {
     getIt<PreferencesService>().oAuthCredentials = this.oauthClient.credentials;
   }
 
+  get accessToken async{
+    if(this.oauthClient.credentials.isExpired) {
+      await this.refreshToken();
+    }
+
+    return this.oauthClient.credentials.accessToken;
+
+  }
+
   Future<oauth2.Client> authorize() async {
 
     // If we don't have OAuth2 credentials yet, we need to get the resource owner
@@ -38,7 +47,7 @@ class OauthService {
 
     // A URL on the authorization server (authorizationEndpoint with some additional
     // query parameters). Scopes and state can optionally be passed into this method.
-    var authorizationUrl = grant.getAuthorizationUrl(Uri.parse(this.instanceSettings.redirectURL));
+    var authorizationUrl = grant.getAuthorizationUrl(Uri.parse(this.instanceSettings.redirectURL), scopes: ["administrative-staff"]);
 
     // Redirect the resource owner to the authorization URL. Once the resource
     // owner has authorized, they'll be redirected to `redirectUrl` with an
@@ -51,8 +60,8 @@ class OauthService {
     // the AuthorizationCodeGrant. It will validate them and extract the
     // authorization code to create a new Client.
     this.oauthClient =  await grant.handleAuthorizationResponse(code);
-    await this.refreshToken();
-    return this.oauthClient;
+    getIt<PreferencesService>().oAuthCredentials = this.oauthClient.credentials;
+      return this.oauthClient;
   }
 
 

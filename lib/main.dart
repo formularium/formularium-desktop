@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:formularium_desktop/services/GraphQLService.dart';
 import 'package:formularium_desktop/services/PreferencesService.dart';
 import 'package:get_it/get_it.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'constants/AppRoutes.dart';
 import 'models/AppRouter.dart';
@@ -12,11 +14,16 @@ final getIt = GetIt.instance;
 
 
 Future setupGetIt() async {
-  var instance = await PreferencesService.getInstance();
-  getIt.registerSingleton<PreferencesService>(instance);
+  var prefinstance = await PreferencesService.getInstance();
+  getIt.registerSingleton<PreferencesService>(prefinstance);
+
+  var gqlistace = await GraphQLService.getInstance();
+  getIt.registerSingleton<GraphQLService>(gqlistace);
+
 }
 
 void main() async{
+  await initHiveForFlutter();
   WidgetsFlutterBinding.ensureInitialized();
   await setupGetIt();
   runApp(MyApp());

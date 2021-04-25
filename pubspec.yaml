@@ -26,7 +26,7 @@ dependencies:
   gql: ^0.13.0-0
   gql_exec: ^0.3.0-0      
   gql_link: ^0.4.0-0      
-  gql_http_link: ^0.4.0-0 
+  gql_http_link: ^0.4.0-0
   http: ^0.13.1        
   oauth2: ^2.0.0       
   fluro: ^2.0.3
@@ -41,6 +41,7 @@ dependencies:
   biometric_storage: ^2.0.2
   openpgp: ^1.1.5
   form_field_validator: ^1.1.0
+  graphql_flutter: ^5.0.0-nullsafety.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

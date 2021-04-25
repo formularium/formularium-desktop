@@ -17,7 +17,7 @@ class PreferencesService {
       _preferences = await SharedPreferences.getInstance();
     }
     return _instance;
-  }
+}
 
   dynamic _getFromDisk(String key){
     final SharedPreferences prefs = _preferences;
