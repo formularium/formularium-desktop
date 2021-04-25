@@ -4,7 +4,7 @@ import 'package:formularium_desktop/constants/GraphQL.dart';
 import 'package:formularium_desktop/services/GraphQLService.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-  import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import '../main.dart';
 
 // inspired by https://github.com/RegNex/ProjectMgtTool_Flutter_Desktop/
@@ -19,18 +19,29 @@ class HomePage extends StatelessWidget {
               children: [
                 Container(
                   color: Theme.of(context).cardColor,
-                  width: MediaQuery.of(context).size.width / 6,
-                  padding: EdgeInsets.all(24),
+                  width: MediaQuery.of(context).size.width > 800 ? 200 : 80,
+                  padding: EdgeInsets.all(12),
                   child: Column(
                     children: [
                       ListTile(
-                        title: Text(
-                          'Formularium',
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
+                        title: MediaQuery.of(context).size.width > 800
+                            ? Text(
+                                'Formularium',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              )
+                            : Text(
+                                "📝",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30),
+                                textAlign: TextAlign.center,
+                              ),
                       ),
                       SizedBox(height: 25),
                       MenuOptionsWidget(
@@ -57,7 +68,9 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Container(
-                    width: (MediaQuery.of(context).size.width / 6) * 5,
+                    width: MediaQuery.of(context).size.width > 800
+                        ? MediaQuery.of(context).size.width - 200
+                        : MediaQuery.of(context).size.width - 80,
                     padding: EdgeInsets.all(24),
                     child: Center(
                       child: Column(
@@ -122,20 +135,24 @@ class _MenuOptionsWidgetState extends State<MenuOptionsWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          onTap: widget.voidCallback,
-          leading: Icon(
-            widget.icon,
-            color: widget.isSelected
-                ? Color.fromRGBO(119, 12, 159, 1)
-                : Color.fromRGBO(137, 137, 137, 1),
-          ),
-          title: Text(
-            widget.label,
-            style: Theme.of(context).textTheme.bodyText2.copyWith(
-                color: widget.isSelected
-                    ? Color.fromRGBO(119, 12, 159, 1)
-                    : Color.fromRGBO(137, 137, 137, 1)),
+        Center(
+          child: ListTile(
+            onTap: widget.voidCallback,
+            leading: Icon(
+              widget.icon,
+              color: widget.isSelected
+                  ? Color.fromRGBO(119, 12, 159, 1)
+                  : Color.fromRGBO(137, 137, 137, 1),
+            ),
+            title: MediaQuery.of(context).size.width > 800
+                ? Text(
+                    widget.label,
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        color: widget.isSelected
+                            ? Color.fromRGBO(119, 12, 159, 1)
+                            : Color.fromRGBO(137, 137, 137, 1)),
+                  )
+                : null,
           ),
         ),
         SizedBox(
