@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:formularium_desktop/constants/AppRoutes.dart';
 import 'package:formularium_desktop/models/AppRouter.dart';
 import 'package:formularium_desktop/models/InstanceStatus.dart';
-import 'package:formularium_desktop/services/GraphQLService.dart';
 import 'package:formularium_desktop/services/OauthService.dart';
 import 'package:formularium_desktop/services/PGPService.dart';
 import 'package:formularium_desktop/services/PreferencesService.dart';

@@ -20,8 +20,6 @@ class PreferencesService {
   }
 
   dynamic _getFromDisk(String key) {
-    final SharedPreferences prefs = _preferences;
-
     var value = _preferences.get(key);
     print('(TRACE) PreferencesService:_getFromDisk. key: $key value: $value');
     return value;

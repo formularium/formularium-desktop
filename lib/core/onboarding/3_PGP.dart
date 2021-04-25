@@ -110,7 +110,7 @@ class _PGPSetupPage extends State<PGPSetupPage> {
         _spinner = "Submitting Key";
       });
 
-      var keySubmission = await getIt<GraphQLService>().graphQLClient.mutate(
+      await getIt<GraphQLService>().graphQLClient.mutate(
           MutationOptions(
               document: gql(GQLQueries.SUBMIT_KEY),
               variables: {"publicKey": pgpService.publicKey}));

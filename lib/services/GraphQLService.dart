@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:formularium_desktop/services/OauthService.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../main.dart';
@@ -9,7 +7,7 @@ import 'PreferencesService.dart';
 class GraphQLService {
   static GraphQLService _instance;
   Link _link;
-  GraphQLClient _gql_client;
+  GraphQLClient _gqlClient;
   static Future<GraphQLService> getInstance() async {
     if (_instance == null) {
       _instance = GraphQLService();
@@ -34,7 +32,7 @@ class GraphQLService {
       );
       _instance._link = authLink.concat(httpLink);
 
-      _instance._gql_client = GraphQLClient(
+      _instance._gqlClient = GraphQLClient(
         link: _instance._link,
         cache: GraphQLCache(store: HiveStore()),
         // The default store is the InMemoryStore, which does NOT persist to disk
@@ -43,6 +41,6 @@ class GraphQLService {
   }
 
   get graphQLClient {
-    return _gql_client;
+    return _gqlClient;
   }
 }
