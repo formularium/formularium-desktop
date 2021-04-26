@@ -25,13 +25,19 @@ class PGPService {
         await (await PGPService.getBiometricStorage()).read()));
   }
 
-  static canAccessBiometricStorage() async {
+  static Future<CanAuthenticateResponse> canAccessBiometricStorage() async {
     final response = await BiometricStorage().canAuthenticate();
     print('checked if authentication was possible: $response');
+    return response;
   }
 
   static Future<BiometricStorageFile> getBiometricStorage() async {
-    if (PGPService.canAccessBiometricStorage()) {
+    CanAuthenticateResponse authenticate =
+        await PGPService.canAccessBiometricStorage();
+    final supportsAuthenticated =
+        authenticate == CanAuthenticateResponse.success ||
+            authenticate == CanAuthenticateResponse.statusUnknown;
+    if (supportsAuthenticated) {
       return await BiometricStorage().getStorage('pgpKey',
           options: StorageFileInitOptions(
               authenticationRequired: false,
