@@ -40,12 +40,12 @@ class PGPService {
     if (supportsAuthenticated) {
       return await BiometricStorage().getStorage('pgpKey',
           options: StorageFileInitOptions(
-              authenticationRequired: false,
               authenticationValidityDurationSeconds: 1200));
     }
 
     return BiometricStorage().getStorage('pgpKey',
         options: StorageFileInitOptions(
+            authenticationRequired: false,
             authenticationValidityDurationSeconds: 1200));
   }
 
