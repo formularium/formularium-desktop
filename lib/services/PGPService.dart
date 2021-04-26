@@ -31,9 +31,18 @@ class PGPService {
   }
 
   static Future<BiometricStorageFile> getBiometricStorage() async {
-    return await BiometricStorage().getStorage('pgpKey',
+
+    if(PGPService.canAccessBiometricStorage())  {
+      return await BiometricStorage().getStorage('pgpKey',
+          options: StorageFileInitOptions(
+              authenticationRequired: false,
+              authenticationValidityDurationSeconds: 1200));
+    }
+
+    return BiometricStorage().getStorage('pgpKey',
         options: StorageFileInitOptions(
             authenticationValidityDurationSeconds: 1200));
+
   }
 
   static generateNewKey(String name, String email, String passphrase) async {
