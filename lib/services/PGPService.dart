@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:biometric_storage/biometric_storage.dart';
+import 'package:jose/jose.dart';
 import 'package:openpgp/model/bridge.pb.dart';
 import 'package:openpgp/openpgp.dart';
 
 class PGPService {
   KeyPair _keyPair;
-  String _passphrase;
+  String _password;
   static PGPService _instance;
 
   static Future<PGPService> getInstance() async {
@@ -49,20 +52,27 @@ class PGPService {
             authenticationValidityDurationSeconds: 1200));
   }
 
-  static generateNewKey(String name, String email, String passphrase) async {
+  static generateNewKey(String name, String email, [String password]) async {
     var keyOptions = KeyOptions()..rsaBits = 4096;
+    Options options =  Options()
+      ..name = name
+      ..email = email
+      ..keyOptions = keyOptions;
+
+    if(password != null)
+      {
+        options.passphrase = password;
+      }
+
     var keyPair = await OpenPGP.generate(
-        options: Options()
-          ..name = name
-          ..email = email
-          ..passphrase = passphrase
-          ..keyOptions = keyOptions);
+          options: options);
+
     await (await PGPService.getBiometricStorage()).write(keyPair.writeToJson());
     return PGPService.fromKeyPair(keyPair);
   }
 
-  set passphrase(String passphrase) {
-    this._passphrase = passphrase;
+  set password(String password) {
+    this._password = password;
   }
 
   get publicKey {
@@ -75,7 +85,7 @@ class PGPService {
 
   Future<String> decrypt(String encrypted) async {
     return await OpenPGP.decrypt(
-        encrypted, this._keyPair.privateKey, this._passphrase);
+        encrypted, this._keyPair.privateKey, this._password);
   }
 
   Future<String> encrypt(String text) async {
@@ -88,7 +98,7 @@ class PGPService {
 
   Future<String> sign(String text) async {
     return await OpenPGP.sign(text, this._keyPair.publicKey,
-        this._keyPair.privateKey, this._passphrase);
+        this._keyPair.privateKey, this._password);
   }
 
   Future<bool> verify(String signedText, String text) async {

@@ -5,7 +5,9 @@ import 'package:formularium_desktop/core/RouteNotFoundPage.dart';
 import 'package:formularium_desktop/core/onboarding/1_InstanceConfig.dart';
 import 'package:formularium_desktop/core/onboarding/2_Login.dart';
 import 'package:formularium_desktop/core/onboarding/3_PGP.dart';
+import 'package:formularium_desktop/pages/FormListPage.dart';
 import 'package:formularium_desktop/pages/HomePage.dart';
+import 'package:formularium_desktop/pages/SettingsPage.dart';
 
 class AppRoutes {
   static final routeNotFoundHandler = Handler(
@@ -19,6 +21,20 @@ class AppRoutes {
     '/dashboard',
     Handler(
       handlerFunc: (context, parameters) => HomePage(),
+    ),
+  );
+
+  static final settingsRoute = AppRoute(
+    '/settings',
+    Handler(
+      handlerFunc: (context, parameters) => SettingsPage(),
+    ),
+  );
+
+  static final formListRoute = AppRoute(
+    '/forms',
+    Handler(
+      handlerFunc: (context, parameters) => FormListPage(),
     ),
   );
 
@@ -56,6 +72,8 @@ class AppRoutes {
   static final List<AppRoute> routes = [
     initRoute,
     dashboardRoute,
+    formListRoute,
+    settingsRoute,
     loginRoute,
     setupPGPRoute,
     setupInstanceConfigRoute

@@ -1,3 +1,4 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:formularium_desktop/constants/AppRoutes.dart';
 import 'package:formularium_desktop/models/AppRouter.dart';
@@ -57,6 +58,7 @@ class InitRouterPage extends StatelessWidget {
       AppRouter.router.navigateTo(
         context,
         AppRoutes.dashboardRoute.route,
+          transition: TransitionType.fadeIn
       );
     }
   }

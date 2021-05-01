@@ -40,7 +40,7 @@ class _PGPSetupPage extends State<PGPSetupPage> {
                   key: _formKey,
                   child: Stack(children: <Widget>[
                     Column(
-                      children: <Widget>[
+                      children: getIt<PreferencesService>().instanceSettings.pgpPasswordRequired  ? <Widget>[
                         Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 0, vertical: 16),
@@ -84,6 +84,21 @@ class _PGPSetupPage extends State<PGPSetupPage> {
                             child: ElevatedButton(
                                 onPressed: () => generateKey(context),
                                 child: Text("Generate Key")))
+                      ] : [
+                        Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 0, vertical: 16),
+                            child: const ListTile(
+                              title: Text('Create your Encryption Key'),
+                              subtitle: Text(
+                                  'No we need to create your encryption key. This can take a few seconds'),
+                            )),
+                        Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 16),
+                            child: ElevatedButton(
+                                onPressed: () => generateKey(context),
+                                child: Text("Generate Key")))
                       ],
                     ),
                   ])))
@@ -91,7 +106,7 @@ class _PGPSetupPage extends State<PGPSetupPage> {
   }
 
   void generateKey(context) async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState.validate() || getIt<PreferencesService>().instanceSettings.pgpPasswordRequired == false) {
       setState(() {
         _spinner = "Fetching user information";
       });

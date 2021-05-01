@@ -7,15 +7,17 @@ class InstanceSettings {
   String redirectURL;
   String clientID;
   int loopBackPort;
+  bool pgpPasswordRequired;
 
   InstanceSettings(
       {this.instance,
-      this.authURL,
-      this.tokenURL,
-      this.apiURL,
-      this.redirectURL,
-      this.clientID,
-      this.loopBackPort});
+        this.authURL,
+        this.tokenURL,
+        this.apiURL,
+        this.redirectURL,
+        this.clientID,
+        this.loopBackPort,
+        this.pgpPasswordRequired});
 
   InstanceSettings.fromJson(Map<String, dynamic> json) {
     instance = json['instance'] != null
@@ -27,6 +29,7 @@ class InstanceSettings {
     redirectURL = json['redirectURL'];
     clientID = json['clientID'];
     loopBackPort = json['loopBackPort'];
+    pgpPasswordRequired = json['pgpPasswordRequired'];
   }
 
   Map<String, dynamic> toJson() {
@@ -40,6 +43,7 @@ class InstanceSettings {
     data['redirectURL'] = this.redirectURL;
     data['clientID'] = this.clientID;
     data['loopBackPort'] = this.loopBackPort;
+    data['pgpPasswordRequired'] = this.pgpPasswordRequired;
     return data;
   }
 }
