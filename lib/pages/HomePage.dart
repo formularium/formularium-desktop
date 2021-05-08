@@ -14,40 +14,33 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GraphQLProvider(
         client: ValueNotifier(getIt<GraphQLService>().graphQLClient),
-        child: appPageLayout(
+        child: appPageLayout([
+          Text(
+            "Home Page",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          SizedBox(
+            height: 6,
+          ),
+          Query(
+              options: QueryOptions(
+                document: gql(
+                    GQLQueries.ME), // this is the query string you just created
+              ),
+              builder: (QueryResult result,
+                  {VoidCallback refetch, FetchMore fetchMore}) {
+                if (result.hasException) {
+                  return Text(result.exception.toString());
+                }
 
-          [
-            Text(
-              "Home Page",
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Query(
-                options: QueryOptions(
-                  document: gql(GQLQueries
-                      .ME), // this is the query string you just created
-                ),
-                builder: (QueryResult result,
-                    {VoidCallback refetch, FetchMore fetchMore}) {
-                  if (result.hasException) {
-                    return Text(result.exception.toString());
-                  }
-
-                  if (result.isLoading) {
-                    return Text('Loading');
-                  }
-                  return Text(
-                      'Hallo ' + result.data["me"]["firstName"]);
-                }),
-            SizedBox(
-              height: 10,
-            ),
-          ],
-          context
-        ));
+                if (result.isLoading) {
+                  return Text('Loading');
+                }
+                return Text('Hallo ' + result.data["me"]["firstName"]);
+              }),
+          SizedBox(
+            height: 10,
+          ),
+        ], context));
   }
 }
-
-

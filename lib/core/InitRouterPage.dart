@@ -55,11 +55,8 @@ class InitRouterPage extends StatelessWidget {
         getIt<PreferencesService>().instanceStatus.hasPGPKey == true &&
         getIt<PreferencesService>().instanceStatus.isConfigured == true) {
       await getIt<PGPService>().loadKeyPair();
-      AppRouter.router.navigateTo(
-        context,
-        AppRoutes.dashboardRoute.route,
-          transition: TransitionType.fadeIn
-      );
+      AppRouter.router.navigateTo(context, AppRoutes.dashboardRoute.route,
+          transition: TransitionType.fadeIn);
     }
   }
 

@@ -11,13 +11,13 @@ class InstanceSettings {
 
   InstanceSettings(
       {this.instance,
-        this.authURL,
-        this.tokenURL,
-        this.apiURL,
-        this.redirectURL,
-        this.clientID,
-        this.loopBackPort,
-        this.pgpPasswordRequired});
+      this.authURL,
+      this.tokenURL,
+      this.apiURL,
+      this.redirectURL,
+      this.clientID,
+      this.loopBackPort,
+      this.pgpPasswordRequired});
 
   InstanceSettings.fromJson(Map<String, dynamic> json) {
     instance = json['instance'] != null

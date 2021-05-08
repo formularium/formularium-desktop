@@ -99,20 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  crypto_keys:
-    dependency: transitive
-    description:
-      name: crypto_keys
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   cupertino_icons:
     dependency: "direct main"
     description:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -309,7 +302,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.13.1"
+    version: "0.13.3"
   http_parser:
     dependency: transitive
     description:
@@ -331,13 +324,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.0"
-  jose:
-    dependency: "direct main"
-    description:
-      name: jose
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.2"
   js:
     dependency: transitive
     description:
@@ -478,13 +464,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.1"
   rxdart:
     dependency: transitive
     description:
@@ -650,7 +629,7 @@ packages:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.0"
   win32:
     dependency: transitive
     description:
@@ -658,13 +637,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
-  x509:
-    dependency: transitive
+  x509csr:
+    dependency: "direct main"
     description:
-      name: x509
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.2"
+      path: "."
+      ref: e8b29fd51894a8383e632c514061479ac3a2c360
+      resolved-ref: e8b29fd51894a8383e632c514061479ac3a2c360
+      url: "https://github.com/dnys1/dart-x509csr.git"
+    source: git
+    version: "1.0.0"
   xdg_directories:
     dependency: transitive
     description:

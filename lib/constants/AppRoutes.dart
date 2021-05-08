@@ -8,6 +8,7 @@ import 'package:formularium_desktop/core/onboarding/3_PGP.dart';
 import 'package:formularium_desktop/pages/FormListPage.dart';
 import 'package:formularium_desktop/pages/HomePage.dart';
 import 'package:formularium_desktop/pages/SettingsPage.dart';
+import 'package:formularium_desktop/pages/TeamsPage.dart';
 
 class AppRoutes {
   static final routeNotFoundHandler = Handler(
@@ -35,6 +36,12 @@ class AppRoutes {
     '/forms',
     Handler(
       handlerFunc: (context, parameters) => FormListPage(),
+    ),
+  );
+  static final teamsRoute = AppRoute(
+    '/teams',
+    Handler(
+      handlerFunc: (context, parameters) => TeamsPage(),
     ),
   );
 
@@ -74,6 +81,7 @@ class AppRoutes {
     dashboardRoute,
     formListRoute,
     settingsRoute,
+    teamsRoute,
     loginRoute,
     setupPGPRoute,
     setupInstanceConfigRoute

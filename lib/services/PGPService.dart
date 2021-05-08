@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:biometric_storage/biometric_storage.dart';
-import 'package:jose/jose.dart';
 import 'package:openpgp/model/bridge.pb.dart';
 import 'package:openpgp/openpgp.dart';
 
@@ -54,18 +53,16 @@ class PGPService {
 
   static generateNewKey(String name, String email, [String password]) async {
     var keyOptions = KeyOptions()..rsaBits = 4096;
-    Options options =  Options()
+    Options options = Options()
       ..name = name
       ..email = email
       ..keyOptions = keyOptions;
 
-    if(password != null)
-      {
-        options.passphrase = password;
-      }
+    if (password != null) {
+      options.passphrase = password;
+    }
 
-    var keyPair = await OpenPGP.generate(
-          options: options);
+    var keyPair = await OpenPGP.generate(options: options);
 
     await (await PGPService.getBiometricStorage()).write(keyPair.writeToJson());
     return PGPService.fromKeyPair(keyPair);

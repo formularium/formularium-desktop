@@ -40,73 +40,79 @@ class _PGPSetupPage extends State<PGPSetupPage> {
                   key: _formKey,
                   child: Stack(children: <Widget>[
                     Column(
-                      children: getIt<PreferencesService>().instanceSettings.pgpPasswordRequired  ? <Widget>[
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 0, vertical: 16),
-                            child: const ListTile(
-                              title: Text('Create your Encryption Key'),
-                              subtitle: Text(
-                                  'Please enter the password you want to use to unlock your encryption key.'),
-                            )),
+                      children: getIt<PreferencesService>()
+                              .instanceSettings
+                              .pgpPasswordRequired
+                          ? <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 16),
+                                  child: const ListTile(
+                                    title: Text('Create your Encryption Key'),
+                                    subtitle: Text(
+                                        'Please enter the password you want to use to unlock your encryption key.'),
+                                  )),
 
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 16),
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Password',
-                              ),
-                              onChanged: (val) => password = val,
-                              // assign the the multi validator to the TextFormField validator
-                              validator: this.passwordValidator,
-                            )),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 16),
+                                  child: TextFormField(
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'Password',
+                                    ),
+                                    onChanged: (val) => password = val,
+                                    // assign the the multi validator to the TextFormField validator
+                                    validator: this.passwordValidator,
+                                  )),
 
-                        // using the match validator to confirm password
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 16),
-                            child: TextFormField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Repeat Password',
-                              ),
-                              validator: (val) => MatchValidator(
-                                      errorText: 'passwords do not match')
-                                  .validateMatch(val, password),
-                            )),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 16),
-                            child: ElevatedButton(
-                                onPressed: () => generateKey(context),
-                                child: Text("Generate Key")))
-                      ] : [
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 0, vertical: 16),
-                            child: const ListTile(
-                              title: Text('Create your Encryption Key'),
-                              subtitle: Text(
-                                  'No we need to create your encryption key. This can take a few seconds'),
-                            )),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 16),
-                            child: ElevatedButton(
-                                onPressed: () => generateKey(context),
-                                child: Text("Generate Key")))
-                      ],
+                              // using the match validator to confirm password
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 16),
+                                  child: TextFormField(
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(),
+                                      hintText: 'Repeat Password',
+                                    ),
+                                    validator: (val) => MatchValidator(
+                                            errorText: 'passwords do not match')
+                                        .validateMatch(val, password),
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 16),
+                                  child: ElevatedButton(
+                                      onPressed: () => generateKey(context),
+                                      child: Text("Generate Key")))
+                            ]
+                          : [
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 16),
+                                  child: const ListTile(
+                                    title: Text('Create your Encryption Key'),
+                                    subtitle: Text(
+                                        'No we need to create your encryption key. This can take a few seconds'),
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 16),
+                                  child: ElevatedButton(
+                                      onPressed: () => generateKey(context),
+                                      child: Text("Generate Key")))
+                            ],
                     ),
                   ])))
     ], "Login", 'Setup your Encryption Key');
   }
 
   void generateKey(context) async {
-    if (_formKey.currentState.validate() || getIt<PreferencesService>().instanceSettings.pgpPasswordRequired == false) {
+    if (_formKey.currentState.validate() ||
+        getIt<PreferencesService>().instanceSettings.pgpPasswordRequired ==
+            false) {
       setState(() {
         _spinner = "Fetching user information";
       });

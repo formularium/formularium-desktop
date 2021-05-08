@@ -13,6 +13,7 @@ ThemeData customLightTheme(
       errorColor: Colors.red,
       platform: defaultTargetPlatform,
       primaryColor: Colors.white,
+      dividerTheme: DividerThemeData(color: Color.fromRGBO(137, 137, 137, 1)),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           primary: Color.fromRGBO(119, 12, 159, 1),
@@ -76,7 +77,7 @@ ThemeData customLightTheme(
             caption: TextStyle(color: Colors.black, fontSize: 12),
             headline1: TextStyle(color: Colors.black, fontSize: 96),
             headline2: TextStyle(color: Colors.black, fontSize: 60),
-            headline3: TextStyle(color: Colors.black, fontSize: 48),
+            headline3: TextStyle(color: Colors.black, fontSize: 28),
             headline4: TextStyle(color: Colors.black, fontSize: 34),
             headline5: TextStyle(color: Colors.black, fontSize: 24),
             headline6: TextStyle(color: Colors.black, fontSize: 20),
