@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:formularium_desktop/constants/AppRoutes.dart';
@@ -132,8 +134,11 @@ class _PGPSetupPage extends State<PGPSetupPage> {
       });
 
       await getIt<GraphQLService>().graphQLClient.mutate(MutationOptions(
-          document: gql(GQLQueries.SUBMIT_KEY),
-          variables: {"publicKey": pgpService.publicKey}));
+              document: gql(GQLQueries.SUBMIT_KEY),
+              variables: {
+                "publicKey": pgpService.publicKey,
+                "keyName": Platform.operatingSystem
+              }));
 
       var status = getIt<PreferencesService>().instanceStatus;
       status.hasPGPKey = true;

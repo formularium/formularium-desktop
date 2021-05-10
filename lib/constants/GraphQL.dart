@@ -6,12 +6,23 @@ class GQLQueries {
         lastName
         email
         id
+        encryptionKeys {
+          edges {
+            node {
+              keyName
+              publicKey
+              active
+              id
+              fingerprint
+            }
+          }
+        }
     }
   }""";
 
   static const String SUBMIT_KEY = """
-  mutation(\$publicKey: String!) {
-      submitEncryptionKey(publicKey: \$publicKey ) {
+  mutation(\$publicKey: String!, \$keyName: String!) {
+      submitEncryptionKey(publicKey: \$publicKey, keyName: \$keyName ) {
         success
         encryptionKey {
           id
@@ -24,7 +35,7 @@ class GQLQueries {
 
   static const String APPROVE_USER_KEY = """
   mutation(\$publicKeyId: ID!) {
-        activateEncryptionKey(publicKeyId: \$publicKeyId) {
+        activateEncryptionKey(publicKeyId: \$publicKeyId, keys: []) {
     encryptionKey {
       id
       fingerprint
@@ -34,8 +45,8 @@ class GQLQueries {
   """;
 
   static const String CREATE_TEAM = """
-  mutation(\$key: String!, \$name: String!) {
-  createTeam(key: \$key, name: \$name) {
+  mutation(\$keys: [EncryptionKeysInputType], \$name: String!) {
+  createTeam(keys: \$keys, name: \$name) {
     team {
       name
       domain

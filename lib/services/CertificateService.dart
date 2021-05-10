@@ -31,4 +31,10 @@ class CertificateService {
         encodeRSAPrivateKeyToPem(certificateService.keyPair.privateKey));
     return certificateService;
   }
+
+  encryptPrivateKeyWithPublicKey(publicKey) async {
+    var pgp = await PGPService.encryptWithPGP(
+        encodeRSAPrivateKeyToPem(this.keyPair.privateKey), publicKey);
+    return pgp;
+  }
 }

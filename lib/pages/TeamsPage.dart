@@ -1,18 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:formularium_desktop/components/admin/CreateCSR.dart';
-import 'package:formularium_desktop/components/admin/EncryptionKeyApproval.dart';
-import 'package:formularium_desktop/constants/GraphQL.dart';
 import 'package:formularium_desktop/services/GraphQLService.dart';
-import 'package:formularium_desktop/services/PGPService.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:openpgp/model/bridge.pb.dart';
-import "package:x509csr/x509csr.dart";
 
-import "package:pointycastle/export.dart";
-import 'package:asn1lib/asn1lib.dart';
 import '../main.dart';
 import 'AppPage.dart';
 
@@ -94,7 +86,7 @@ class TeamsPage extends StatelessWidget {
                       ),
                     ],
                   ))),
-          RaisedButton(
+          ElevatedButton(
             onPressed: () {
               showDialog(
                   context: context,
